@@ -1,27 +1,15 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Safe access to environment variable to prevent "process is not defined" crash in browsers
-const getApiKey = () => {
-  try {
-    // @ts-ignore
-    if (typeof process !== 'undefined' && process.env) {
-      // @ts-ignore
-      return process.env.API_KEY || '';
-    }
-  } catch (e) {
-    return '';
-  }
-  return '';
-};
+// В браузере (без сборщика Vite/Webpack) переменная process не существует.
+// Мы должны обрабатывать ключ безопасно.
+// Если ключа нет, AI функции просто не будут работать, но приложение загрузится.
+const API_KEY = ''; 
 
-const API_KEY = getApiKey();
 let ai: GoogleGenAI | null = null;
 
 try {
     if (API_KEY) {
         ai = new GoogleGenAI({ apiKey: API_KEY });
-    } else {
-        console.warn("Gemini API Key missing. AI features disabled.");
     }
 } catch (e) {
     console.error("Failed to initialize Gemini Client", e);

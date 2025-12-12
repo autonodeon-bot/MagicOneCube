@@ -5,51 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <title>Мир Магнитных Кубов</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              'neon-blue': '#00f3ff',
-              'neon-purple': '#bc13fe',
-              'mag-dark': '#0b0c15',
-              'mag-panel': '#151621'
-            },
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
-            animation: {
-              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'float': 'float 3s ease-in-out infinite',
-            },
-            keyframes: {
-              float: {
-                '0%, 100%': { transform: 'translateY(0)' },
-                '50%': { transform: 'translateY(-10px)' },
-              }
-            }
-          },
-        },
-      }
-    </script>
     <style>
-      body { margin: 0; background-color: #0b0c15; color: white; overflow: hidden; touch-action: none; }
+      body { margin: 0; background-color: #0b0c15; color: white; overflow: hidden; touch-action: none; font-family: 'Inter', sans-serif; }
       canvas { display: block; }
       /* Custom Scrollbar */
       ::-webkit-scrollbar { width: 6px; }
       ::-webkit-scrollbar-track { background: #151621; }
       ::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
       ::-webkit-scrollbar-thumb:hover { background: #00f3ff; }
+
+      /* Critical Fallback Styles - обеспечивают внешний вид даже если Tailwind заблокирован CSP */
+      .bg-mag-dark { background-color: #0b0c15; }
+      .bg-mag-panel { background-color: #151621; }
+      .text-neon-blue { color: #00f3ff; }
+      .text-neon-purple { color: #bc13fe; }
+      .border-neon-blue { border-color: #00f3ff; }
+      .border-neon-purple { border-color: #bc13fe; }
+      
+      /* Utilities usually handled by Tailwind */
+      .absolute { position: absolute; }
+      .relative { position: relative; }
+      .w-full { width: 100%; }
+      .h-full { height: 100%; }
+      .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+      .flex { display: flex; }
+      .flex-col { flex-direction: column; }
+      .items-center { align-items: center; }
+      .justify-center { justify-content: center; }
+      .text-center { text-align: center; }
+      .font-bold { font-weight: bold; }
+      .z-10 { z-index: 10; }
+      .z-50 { z-index: 50; }
     </style>
   <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.23.1",
+    "@google/genai": "https://esm.sh/@google/genai@0.1.1",
+    "three": "https://esm.sh/three@0.165.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.10.1",
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
-    "three": "https://esm.sh/three@^0.182.0"
+    "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
 </script>

@@ -1,22 +1,26 @@
 import { GoogleGenAI } from "@google/genai";
 
-// В браузере (без сборщика Vite/Webpack) переменная process не существует.
-// Мы должны обрабатывать ключ безопасно.
-// Если ключа нет, AI функции просто не будут работать, но приложение загрузится.
-const API_KEY = ''; 
-
-let ai: GoogleGenAI | null = null;
-
-try {
-    if (API_KEY) {
-        ai = new GoogleGenAI({ apiKey: API_KEY });
+// Initialize the API key safely. 
+// In a browser environment via esm.sh, 'process' is undefined. 
+// We must handle this to prevent the app from crashing before render.
+const getApiKey = () => {
+  try {
+    // Check if process exists before accessing it
+    if (typeof process !== 'undefined' && process.env) {
+      return process.env.API_KEY;
     }
-} catch (e) {
-    console.error("Failed to initialize Gemini Client", e);
-}
+  } catch (e) {
+    // Ignore error
+  }
+  return '';
+};
+
+const apiKey = getApiKey();
+// Only initialize if key exists, otherwise let the functions handle the missing AI state
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const generateDailyFact = async (): Promise<string> => {
-    if (!ai) return "Магниты удивительны!";
+    if (!ai) return "Магнитные поля невидимы, но сильны. (AI Offline)";
 
     try {
         const response = await ai.models.generateContent({
@@ -31,7 +35,7 @@ export const generateDailyFact = async (): Promise<string> => {
 };
 
 export const generateQuestDescription = async (theme: string): Promise<string> => {
-    if (!ai) return `Специальный квест на тему: ${theme}.`;
+    if (!ai) return `Исследуйте магнитные поля и найдите скрытое ядро. (AI Offline - Theme: ${theme})`;
 
     try {
         const response = await ai.models.generateContent({

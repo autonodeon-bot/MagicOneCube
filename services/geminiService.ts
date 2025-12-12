@@ -1,21 +1,34 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 
-// NOTE: In a real production app, this key should be proxied through a backend
-// or loaded from process.env. For this demo structure, we assume it's available.
-const API_KEY = process.env.API_KEY || ''; 
+// Safe access to environment variable to prevent "process is not defined" crash in browsers
+const getApiKey = () => {
+  try {
+    // @ts-ignore
+    if (typeof process !== 'undefined' && process.env) {
+      // @ts-ignore
+      return process.env.API_KEY || '';
+    }
+  } catch (e) {
+    return '';
+  }
+  return '';
+};
 
+const API_KEY = getApiKey();
 let ai: GoogleGenAI | null = null;
 
 try {
     if (API_KEY) {
         ai = new GoogleGenAI({ apiKey: API_KEY });
+    } else {
+        console.warn("Gemini API Key missing. AI features disabled.");
     }
 } catch (e) {
     console.error("Failed to initialize Gemini Client", e);
 }
 
 export const generateDailyFact = async (): Promise<string> => {
-    if (!ai) return "Магниты удивительны! (AI недоступен)";
+    if (!ai) return "Магниты удивительны!";
 
     try {
         const response = await ai.models.generateContent({

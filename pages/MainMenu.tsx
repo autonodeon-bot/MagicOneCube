@@ -1,19 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BackgroundScene } from '../components/Three/BackgroundScene';
 import { GAMES_CONFIG } from '../constants';
 import { useNavigate } from 'react-router-dom';
-import { useGame } from '../store/GameContext';
-import { generateDailyFact } from '../services/geminiService';
 
 export const MainMenu: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useGame();
-  const [dailyFact, setDailyFact] = useState<string>("Загрузка магнитной мудрости...");
-
-  // Fetch AI fact on mount
-  React.useEffect(() => {
-    generateDailyFact().then(setDailyFact);
-  }, []);
 
   const getGameRoute = (id: string) => {
     switch(id) {
@@ -35,10 +26,6 @@ export const MainMenu: React.FC = () => {
         <h1 className="text-4xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-purple drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]">
           МАГНИТНЫЙ<br />МИР
         </h1>
-        <div className="mt-4 p-3 rounded-lg bg-black/40 backdrop-blur-sm border border-white/10">
-          <p className="text-xs text-neon-blue uppercase font-bold mb-1">Мудрость Дня</p>
-          <p className="text-sm text-gray-300 italic">"{dailyFact}"</p>
-        </div>
       </div>
 
       {/* Game Grid */}

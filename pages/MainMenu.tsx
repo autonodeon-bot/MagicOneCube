@@ -15,6 +15,17 @@ export const MainMenu: React.FC = () => {
     generateDailyFact().then(setDailyFact);
   }, []);
 
+  const getGameRoute = (id: string) => {
+    switch(id) {
+      case 'game1': return '/game/tower';
+      case 'game2': return '/game/merge';
+      case 'game3': return '/game/puzzle';
+      case 'game4': return '/game/avalanche';
+      case 'game5': return '/game/labyrinth';
+      default: return '/';
+    }
+  };
+
   return (
     <div className="w-full h-full relative flex flex-col items-center overflow-y-auto pb-24">
       <BackgroundScene />
@@ -35,7 +46,7 @@ export const MainMenu: React.FC = () => {
         {GAMES_CONFIG.map((game, index) => (
           <div 
             key={game.id}
-            onClick={() => navigate(game.id === 'game1' ? '/game/tower' : `/game/placeholder/${game.id}`)}
+            onClick={() => navigate(getGameRoute(game.id))}
             className="group relative h-28 rounded-2xl overflow-hidden cursor-pointer transform transition-all hover:scale-105 active:scale-95"
             style={{ boxShadow: `0 0 15px ${game.color}20` }}
           >

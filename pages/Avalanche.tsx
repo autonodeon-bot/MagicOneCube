@@ -1,0 +1,192 @@
+import React, { useRef, useEffect, useState } from 'react';
+import * as THREE from 'three';
+import { useNavigate } from 'react-router-dom';
+import { useGame } from '../store/GameContext';
+
+const ROWS = 8;
+const COLS = 6;
+const COLORS = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00];
+
+export const Avalanche: React.FC = () => {
+  const mountRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const { addCoins, setGameScore } = useGame();
+  
+  const [score, setScore] = useState(0);
+  
+  // Grid Data: [col][row] -> Mesh | null
+  const gridRef = useRef<(THREE.Mesh | null)[][]>([]);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+
+  useEffect(() => {
+    if (!mountRef.current) return;
+
+    // Init Grid
+    gridRef.current = Array(COLS).fill(null).map(() => Array(ROWS).fill(null));
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x151621);
+    sceneRef.current = scene;
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(COLS/2 - 0.5, ROWS/2, 10);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    mountRef.current.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const dl = new THREE.DirectionalLight(0xffffff, 0.8);
+    dl.position.set(2, 5, 5);
+    scene.add(dl);
+
+    // Initial Fill
+    fillGrid(scene);
+
+    // Click Handler
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    const onClick = (e: MouseEvent) => {
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+
+        // Flatten grid to check intersection
+        const meshes: THREE.Mesh[] = [];
+        gridRef.current.forEach(col => col.forEach(m => { if(m) meshes.push(m) }));
+        
+        const intersects = raycaster.intersectObjects(meshes);
+        if (intersects.length > 0) {
+            const hit = intersects[0].object as THREE.Mesh;
+            handleBlockClick(hit);
+        }
+    };
+    window.addEventListener('click', onClick);
+
+    const animate = () => {
+        requestAnimationFrame(animate);
+        // Lerp positions for falling effect
+        gridRef.current.forEach((col, x) => {
+            col.forEach((mesh, y) => {
+                if (mesh) {
+                    mesh.position.y += (y - mesh.position.y) * 0.2; // Smooth fall
+                    mesh.position.x += (x - mesh.position.x) * 0.2; // Smooth slide
+                }
+            });
+        });
+        renderer.render(scene, camera);
+    };
+    animate();
+
+    return () => {
+        window.removeEventListener('click', onClick);
+        if (mountRef.current) mountRef.current.removeChild(renderer.domElement);
+    };
+  }, []);
+
+  const fillGrid = (scene: THREE.Scene) => {
+      for(let x=0; x<COLS; x++) {
+          for(let y=0; y<ROWS; y++) {
+              if (!gridRef.current[x][y]) {
+                  const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+                  const geo = new THREE.BoxGeometry(0.9, 0.9, 0.9);
+                  const mat = new THREE.MeshStandardMaterial({ color });
+                  const mesh = new THREE.Mesh(geo, mat);
+                  mesh.position.set(x, 10 + y, 0); // Start high
+                  mesh.userData = { color, gridPos: {x, y} };
+                  scene.add(mesh);
+                  gridRef.current[x][y] = mesh;
+              }
+          }
+      }
+  };
+
+  const handleBlockClick = (mesh: THREE.Mesh) => {
+      const color = mesh.userData.color;
+      const queue = [mesh.userData.gridPos];
+      const visited = new Set<string>();
+      const toRemove: {x:number, y:number}[] = [];
+
+      // BFS for connected components
+      while(queue.length > 0) {
+          const {x, y} = queue.pop()!;
+          const key = `${x},${y}`;
+          if (visited.has(key)) continue;
+          visited.add(key);
+          toRemove.push({x,y});
+
+          // Check neighbors
+          const neighbors = [
+              {x:x+1, y}, {x:x-1, y}, {x, y:y+1}, {x, y:y-1}
+          ];
+          
+          neighbors.forEach(n => {
+              if (n.x>=0 && n.x<COLS && n.y>=0 && n.y<ROWS) {
+                  const neighborMesh = gridRef.current[n.x][n.y];
+                  if (neighborMesh && neighborMesh.userData.color === color) {
+                      queue.push(n);
+                  }
+              }
+          });
+      }
+
+      if (toRemove.length < 2) return; // Need at least 2 to pop
+
+      // Remove
+      toRemove.forEach(({x, y}) => {
+          const m = gridRef.current[x][y];
+          if (m) sceneRef.current?.remove(m);
+          gridRef.current[x][y] = null;
+      });
+
+      // Update Score
+      const points = toRemove.length * 10;
+      setScore(s => s + points);
+      setGameScore('game4', score + points); // Simple immediate sync
+      if (toRemove.length > 5) addCoins(5); // Bonus coins
+
+      // Gravity Logic (Shift Down)
+      for(let x=0; x<COLS; x++) {
+          const newCol: (THREE.Mesh | null)[] = [];
+          // Collect existing
+          for(let y=0; y<ROWS; y++) {
+              if (gridRef.current[x][y]) newCol.push(gridRef.current[x][y]);
+          }
+          // Fill top with nulls for now, Refill later?
+          // Let's refill immediately for endless mode
+          while(newCol.length < ROWS) {
+              // Spawn new logic could be here, or just let empty space exist
+              // Let's spawn new to make it endless
+               const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+               const geo = new THREE.BoxGeometry(0.9, 0.9, 0.9);
+               const mat = new THREE.MeshStandardMaterial({ color });
+               const mesh = new THREE.Mesh(geo, mat);
+               mesh.position.set(x, ROWS + newCol.length, 0);
+               mesh.userData = { color, gridPos: {x, y:0} }; // Pos will be updated by loop
+               sceneRef.current?.add(mesh);
+               newCol.push(mesh);
+          }
+          
+          // Reassign to grid array
+          for(let y=0; y<ROWS; y++) {
+              gridRef.current[x][y] = newCol[y];
+              if (newCol[y]) {
+                  newCol[y]!.userData.gridPos = {x, y};
+              }
+          }
+      }
+  };
+
+  return (
+    <div className="w-full h-full relative">
+       <div ref={mountRef} className="w-full h-full bg-mag-dark" />
+       
+       <div className="absolute top-4 left-0 w-full text-center pointer-events-none">
+           <span className="text-4xl font-black text-white drop-shadow-md">{score}</span>
+       </div>
+       
+       <button onClick={() => navigate('/')} className="absolute top-4 left-4 z-40 w-10 h-10 bg-black/30 rounded-full text-white border border-white/20 flex items-center justify-center">✕</button>
+    </div>
+  );
+};

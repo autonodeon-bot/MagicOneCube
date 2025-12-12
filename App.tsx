@@ -4,19 +4,16 @@ import { GameProvider } from './store/GameContext';
 import { Layout } from './components/Layout/Layout';
 import { MainMenu } from './pages/MainMenu';
 import { Shop } from './pages/Shop';
-import { MagnetTower } from './pages/MagnetTower';
 import { Admin } from './pages/Admin';
 import { QrScanner } from './pages/QrScanner';
 import { Profile } from './pages/Profile';
 
-// Placeholder for games not yet implemented
-const GamePlaceholder: React.FC = () => (
-  <div className="w-full h-full flex flex-col items-center justify-center bg-mag-dark text-white p-6 text-center">
-    <h1 className="text-3xl font-bold text-neon-purple mb-4">Coming Soon</h1>
-    <p className="text-gray-400">This magnetic flux chamber is currently under construction.</p>
-    <a href="#/" className="mt-8 px-6 py-3 bg-white/10 rounded-full hover:bg-white/20">Return to Base</a>
-  </div>
-);
+// Games
+import { MagnetTower } from './pages/MagnetTower';
+import { CubeMerge } from './pages/CubeMerge';
+import { MagneticPuzzle } from './pages/MagneticPuzzle';
+import { Avalanche } from './pages/Avalanche';
+import { Labyrinth } from './pages/Labyrinth';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -49,7 +46,10 @@ const App: React.FC = () => {
             
             {/* Games */}
             <Route path="/game/tower" element={<MagnetTower />} />
-            <Route path="/game/placeholder/:id" element={<GamePlaceholder />} />
+            <Route path="/game/merge" element={<CubeMerge />} />
+            <Route path="/game/puzzle" element={<MagneticPuzzle />} />
+            <Route path="/game/avalanche" element={<Avalanche />} />
+            <Route path="/game/labyrinth" element={<Labyrinth />} />
             
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

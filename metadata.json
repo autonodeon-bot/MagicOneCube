@@ -1,0 +1,7 @@
+{
+  "name": "Magnetic Cubes World",
+  "description": "A unified ecosystem of 3D magnetic puzzle games with a shared economy and rewards.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

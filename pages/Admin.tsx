@@ -14,8 +14,8 @@ export const Admin: React.FC = () => {
   if (!user.isAdmin) {
     return (
       <div className="p-10 text-center">
-        <h1 className="text-red-500">ACCESS DENIED</h1>
-        <button onClick={() => navigate('/')} className="mt-4 text-white underline">Return Home</button>
+        <h1 className="text-red-500">ДОСТУП ЗАПРЕЩЕН</h1>
+        <button onClick={() => navigate('/')} className="mt-4 text-white underline">На главную</button>
       </div>
     );
   }
@@ -31,47 +31,47 @@ export const Admin: React.FC = () => {
   return (
     <div className="w-full h-full bg-mag-dark p-6 overflow-y-auto pb-24">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-black text-white">ADMIN CONSOLE</h1>
-        <button onClick={() => navigate('/')} className="text-sm text-gray-400">Exit</button>
+        <h1 className="text-2xl font-black text-white">АДМИН ПАНЕЛЬ</h1>
+        <button onClick={() => navigate('/')} className="text-sm text-gray-400">Выход</button>
       </div>
 
       {/* Stats Panel */}
       <div className="grid grid-cols-2 gap-4 mb-8">
         <div className="bg-mag-panel p-4 rounded-lg border border-white/10">
-          <p className="text-xs text-gray-400">Total Players</p>
+          <p className="text-xs text-gray-400">Игроков</p>
           <p className="text-xl font-bold text-neon-blue">12,405</p>
         </div>
         <div className="bg-mag-panel p-4 rounded-lg border border-white/10">
-          <p className="text-xs text-gray-400">Revenue (Ads)</p>
+          <p className="text-xs text-gray-400">Доход (Ads)</p>
           <p className="text-xl font-bold text-green-400">$1,290</p>
         </div>
       </div>
 
       {/* QR Generation Tool */}
       <div className="bg-mag-panel p-4 rounded-lg border border-white/10 mb-8">
-        <h2 className="font-bold text-white mb-4 border-b border-white/10 pb-2">Generate QR Code</h2>
+        <h2 className="font-bold text-white mb-4 border-b border-white/10 pb-2">Генератор QR Кодов</h2>
         <div className="flex flex-col gap-3">
-          <input type="number" placeholder="Reward Amount (MC)" className="bg-black/40 border border-white/20 p-2 rounded text-white text-sm" />
+          <input type="number" placeholder="Награда (MC)" className="bg-black/40 border border-white/20 p-2 rounded text-white text-sm" />
           <select className="bg-black/40 border border-white/20 p-2 rounded text-white text-sm">
-            <option>Single Use</option>
-            <option>Multi Use</option>
+            <option>Одноразовый</option>
+            <option>Многоразовый</option>
           </select>
-          <button className="bg-neon-blue text-black font-bold py-2 rounded hover:bg-cyan-300">Create Code</button>
+          <button className="bg-neon-blue text-black font-bold py-2 rounded hover:bg-cyan-300">Создать Код</button>
         </div>
       </div>
 
       {/* Gemini AI Integration */}
       <div className="bg-mag-panel p-4 rounded-lg border border-neon-purple/30 mb-8">
         <h2 className="font-bold text-white mb-2 flex items-center gap-2">
-          <span>✨</span> AI Quest Generator
+          <span>✨</span> Генератор Квестов (AI)
         </h2>
-        <p className="text-xs text-gray-400 mb-4">Use Gemini to create flavor text for new events.</p>
+        <p className="text-xs text-gray-400 mb-4">Используйте AI для создания описаний событий.</p>
         
         <input 
           type="text" 
           value={questTheme}
           onChange={(e) => setQuestTheme(e.target.value)}
-          placeholder="e.g. 'Ice Kingdom', 'Lost Magnet'"
+          placeholder="напр. 'Ледяное Королевство', 'Потерянный Магнит'"
           className="w-full bg-black/40 border border-white/20 p-2 rounded text-white text-sm mb-3"
         />
         
@@ -80,7 +80,7 @@ export const Admin: React.FC = () => {
           disabled={isGenerating}
           className="w-full bg-neon-purple text-white font-bold py-2 rounded mb-3 disabled:opacity-50"
         >
-          {isGenerating ? 'Consulting Gemini...' : 'Generate Description'}
+          {isGenerating ? 'Спрашиваю AI...' : 'Сгенерировать'}
         </button>
 
         {generatedQuest && (
@@ -92,9 +92,9 @@ export const Admin: React.FC = () => {
 
       {/* Manual Override */}
       <div className="bg-red-900/20 p-4 rounded-lg border border-red-500/20">
-         <h2 className="font-bold text-red-400 mb-2">Debug Actions</h2>
+         <h2 className="font-bold text-red-400 mb-2">Отладка</h2>
          <button onClick={() => addCoins(10000)} className="text-xs bg-red-800 text-white px-3 py-1 rounded">
-           +10k Self Coins
+           +10k Монет (Себе)
          </button>
       </div>
     </div>

@@ -8,7 +8,7 @@ import { generateDailyFact } from '../services/geminiService';
 export const MainMenu: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useGame();
-  const [dailyFact, setDailyFact] = useState<string>("Loading magnetic knowledge...");
+  const [dailyFact, setDailyFact] = useState<string>("Загрузка магнитной мудрости...");
 
   // Fetch AI fact on mount
   React.useEffect(() => {
@@ -33,10 +33,10 @@ export const MainMenu: React.FC = () => {
       {/* Header Area */}
       <div className="pt-20 pb-6 px-6 text-center z-10 w-full max-w-md">
         <h1 className="text-4xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-purple drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]">
-          MAGNETIC<br />WORLD
+          МАГНИТНЫЙ<br />МИР
         </h1>
         <div className="mt-4 p-3 rounded-lg bg-black/40 backdrop-blur-sm border border-white/10">
-          <p className="text-xs text-neon-blue uppercase font-bold mb-1">Daily Wisdom</p>
+          <p className="text-xs text-neon-blue uppercase font-bold mb-1">Мудрость Дня</p>
           <p className="text-sm text-gray-300 italic">"{dailyFact}"</p>
         </div>
       </div>
@@ -61,7 +61,7 @@ export const MainMenu: React.FC = () => {
             <div className="absolute inset-0 p-5 flex flex-col justify-center">
               <div className="flex justify-between items-start">
                  <h2 className="text-xl font-bold text-white drop-shadow-md">{game.name}</h2>
-                 <span className="text-xs px-2 py-1 rounded bg-black/50 text-white/80 border border-white/10">PLAY</span>
+                 <span className="text-xs px-2 py-1 rounded bg-black/50 text-white/80 border border-white/10">ИГРАТЬ</span>
               </div>
               <p className="text-xs text-gray-400 mt-1 max-w-[80%]">{game.description}</p>
             </div>
@@ -85,8 +85,8 @@ export const MainMenu: React.FC = () => {
           className="w-full p-4 rounded-xl bg-gradient-to-r from-yellow-600/20 to-orange-600/20 border border-yellow-500/30 flex items-center justify-between cursor-pointer"
         >
           <div>
-            <h3 className="font-bold text-yellow-400">Hunt for QR Codes!</h3>
-            <p className="text-xs text-gray-300">Scan hidden codes to earn MagCoins.</p>
+            <h3 className="font-bold text-yellow-400">Охота за QR-кодами!</h3>
+            <p className="text-xs text-gray-300">Сканируй коды и получай монеты.</p>
           </div>
           <div className="text-2xl animate-pulse">🎁</div>
         </div>

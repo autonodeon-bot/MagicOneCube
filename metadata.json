@@ -1,6 +1,6 @@
 {
-  "name": "Magnetic Cubes World",
-  "description": "A unified ecosystem of 3D magnetic puzzle games with a shared economy and rewards.",
+  "name": "Мир Магнитных Кубов",
+  "description": "Единая экосистема 3D игр с магнитными головоломками, общей экономикой и наградами.",
   "requestFramePermissions": [
     "camera"
   ]

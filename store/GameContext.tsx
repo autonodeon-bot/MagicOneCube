@@ -15,7 +15,7 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 const INITIAL_USER: UserProfile = {
   id: 'user_123',
-  username: 'MagnetMaster',
+  username: 'МагнитныйМастер',
   magCoins: 5000, // Starting bonus
   isAdmin: true, // For demo purposes to access admin
   inventory: ['default'],

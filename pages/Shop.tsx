@@ -9,7 +9,7 @@ export const Shop: React.FC = () => {
     const success = purchaseUpgrade(id);
     if (!success) {
       // Visual feedback for fail could go here (e.g. shake animation)
-      alert("Not enough MagCoins!");
+      alert("Недостаточно MagCoins!");
     }
   };
 
@@ -18,8 +18,8 @@ export const Shop: React.FC = () => {
       <BackgroundScene />
       
       <div className="pt-20 px-6">
-        <h1 className="text-3xl font-black text-white mb-2">UPGRADE LAB</h1>
-        <p className="text-sm text-gray-400 mb-6">Enhance your magnetic capabilities across all worlds.</p>
+        <h1 className="text-3xl font-black text-white mb-2">ЛАБОРАТОРИЯ</h1>
+        <p className="text-sm text-gray-400 mb-6">Улучшайте свои магнитные способности во всех мирах.</p>
 
         <div className="flex flex-col gap-4">
           {upgrades.map((upgrade) => {
@@ -38,13 +38,13 @@ export const Shop: React.FC = () => {
                     <p className="text-xs text-gray-400">{upgrade.description}</p>
                   </div>
                   <div className="text-xs font-mono bg-black/40 px-2 py-1 rounded text-neon-blue">
-                    Lvl {upgrade.currentLevel} / {upgrade.maxLevel}
+                    Ур. {upgrade.currentLevel} / {upgrade.maxLevel}
                   </div>
                 </div>
 
                 <div className="flex justify-between items-center mt-2">
                    <div className="text-xs text-neon-purple font-bold">
-                     Effect: {upgrade.effectPerLevel}
+                     Эффект: {upgrade.effectPerLevel}
                    </div>
                    
                    {!isMaxed ? (
@@ -60,7 +60,7 @@ export const Shop: React.FC = () => {
                        {currentPrice.toLocaleString()} MC
                      </button>
                    ) : (
-                     <span className="text-green-400 font-bold text-sm px-4 py-2">MAXED</span>
+                     <span className="text-green-400 font-bold text-sm px-4 py-2">МАКС.</span>
                    )}
                 </div>
               </div>

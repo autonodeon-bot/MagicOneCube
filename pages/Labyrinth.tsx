@@ -198,15 +198,15 @@ export const Labyrinth: React.FC = () => {
        <div ref={mountRef} className="w-full h-full bg-mag-dark" />
        
        <div className="absolute top-4 w-full text-center pointer-events-none">
-           <h2 className="text-xl font-bold text-white">LABYRINTH</h2>
-           <p className="text-xs text-gray-400">Touch & Hold to attract the ball</p>
+           <h2 className="text-xl font-bold text-white">ЛАБИРИНТ</h2>
+           <p className="text-xs text-gray-400">Удерживай палец, чтобы притянуть шар</p>
        </div>
 
        {win && (
            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur z-50">
-               <h1 className="text-4xl font-black text-green-400 mb-4">ESCAPED!</h1>
+               <h1 className="text-4xl font-black text-green-400 mb-4">ПОБЕДА!</h1>
                <p className="text-white mb-6">+300 MC</p>
-               <button onClick={() => navigate('/')} className="px-6 py-2 bg-neon-blue text-black font-bold rounded">Continue</button>
+               <button onClick={() => navigate('/')} className="px-6 py-2 bg-neon-blue text-black font-bold rounded">Далее</button>
            </div>
        )}
 

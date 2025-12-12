@@ -34,19 +34,19 @@ export const Profile: React.FC = () => {
              </div>
              <div className="bg-mag-panel/80 p-4 rounded-xl border border-white/10 text-center">
                 <span className="block text-2xl font-bold text-neon-purple">{progress}%</span>
-                <span className="text-xs text-gray-400 uppercase">Tech Level</span>
+                <span className="text-xs text-gray-400 uppercase">Уровень Технологий</span>
              </div>
           </div>
 
           <div className="bg-mag-panel/80 p-6 rounded-xl border border-white/10 mb-6">
-             <h2 className="font-bold text-white mb-4">High Scores</h2>
+             <h2 className="font-bold text-white mb-4">Рекорды</h2>
              {Object.entries(user.highScores).length === 0 ? (
-               <p className="text-sm text-gray-500 italic">No games played yet.</p>
+               <p className="text-sm text-gray-500 italic">Игр пока не сыграно.</p>
              ) : (
                <div className="space-y-3">
                  {Object.entries(user.highScores).map(([gameId, score]) => (
                     <div key={gameId} className="flex justify-between items-center border-b border-white/5 pb-2">
-                       <span className="text-sm text-gray-300 capitalize">{gameId.replace('game', 'Game #')}</span>
+                       <span className="text-sm text-gray-300 capitalize">{gameId.replace('game', 'Игра #')}</span>
                        <span className="font-mono text-neon-blue">{score}</span>
                     </div>
                  ))}

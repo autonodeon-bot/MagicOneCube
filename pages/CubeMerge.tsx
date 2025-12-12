@@ -194,16 +194,16 @@ export const CubeMerge: React.FC = () => {
        </div>
 
        <div className="absolute bottom-10 w-full text-center pointer-events-none text-gray-400 text-sm">
-          Tap columns to drop cubes. Merge same colors!
+          Нажимай на столбцы, чтобы бросить куб. Объединяй цвета!
        </div>
 
        {gameOver && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
            <div className="bg-mag-panel p-8 rounded-2xl text-center border border-neon-purple">
-              <h2 className="text-3xl font-bold text-white mb-2">FULL STACK!</h2>
-              <p className="text-gray-400">Score: {score}</p>
-              <button onClick={() => window.location.reload()} className="mt-4 px-6 py-2 bg-neon-purple text-white rounded font-bold">Restart</button>
-              <button onClick={() => navigate('/')} className="mt-2 block w-full text-sm text-gray-400">Menu</button>
+              <h2 className="text-3xl font-bold text-white mb-2">СТАК ЗАПОЛНЕН!</h2>
+              <p className="text-gray-400">Счет: {score}</p>
+              <button onClick={() => window.location.reload()} className="mt-4 px-6 py-2 bg-neon-purple text-white rounded font-bold">Заново</button>
+              <button onClick={() => navigate('/')} className="mt-2 block w-full text-sm text-gray-400">Меню</button>
            </div>
         </div>
       )}

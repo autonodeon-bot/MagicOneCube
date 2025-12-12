@@ -20,15 +20,15 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                {user.username.substring(0, 2).toUpperCase()}
              </div>
              <div className="flex flex-col">
-                <span className="text-xs text-gray-400">Level {Math.floor(user.magCoins / 1000) + 1}</span>
+                <span className="text-xs text-gray-400">Уровень {Math.floor(user.magCoins / 1000) + 1}</span>
                 <span className="font-bold text-neon-blue drop-shadow-md">MC {user.magCoins.toLocaleString()}</span>
              </div>
           </div>
           
           <div className="pointer-events-auto flex gap-3">
              {user.isAdmin && (
-                <button onClick={() => navigate('/admin')} className="p-2 bg-red-900/50 rounded-lg border border-red-500/30 text-xs">
-                  ADMIN
+                <button onClick={() => navigate('/admin')} className="p-2 bg-red-900/50 rounded-lg border border-red-500/30 text-xs text-white">
+                  АДМИН
                 </button>
              )}
              <button onClick={() => navigate('/shop')} className="p-2 bg-mag-panel rounded-full border border-neon-purple/50 shadow-[0_0_10px_rgba(188,19,254,0.3)]">
@@ -46,9 +46,9 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       {/* Bottom Navigation - Sticky */}
       {!isGameScreen && (
         <nav className="absolute bottom-0 left-0 w-full z-50 bg-mag-panel/90 backdrop-blur-md border-t border-white/10 flex justify-around py-3 pb-5">
-           <NavBtn icon="🏠" label="Home" active={location.pathname === '/'} onClick={() => navigate('/')} />
-           <NavBtn icon="📷" label="Scan" active={location.pathname === '/scan'} onClick={() => navigate('/scan')} />
-           <NavBtn icon="🏆" label="Profile" active={location.pathname === '/profile'} onClick={() => navigate('/profile')} />
+           <NavBtn icon="🏠" label="Главная" active={location.pathname === '/'} onClick={() => navigate('/')} />
+           <NavBtn icon="📷" label="Скан" active={location.pathname === '/scan'} onClick={() => navigate('/scan')} />
+           <NavBtn icon="🏆" label="Профиль" active={location.pathname === '/profile'} onClick={() => navigate('/profile')} />
         </nav>
       )}
     </div>

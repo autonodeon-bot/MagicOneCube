@@ -41,7 +41,7 @@ export const QrScanner: React.FC = () => {
     
     setTimeout(() => {
         addCoins(reward);
-        alert(`QR Code Scanned! You found ${reward} MagCoins!`);
+        alert(`QR Код найден! Вы получили ${reward} MagCoins!`);
         navigate('/');
     }, 500);
   };
@@ -50,8 +50,8 @@ export const QrScanner: React.FC = () => {
     <div className="w-full h-full bg-black relative flex flex-col items-center justify-center">
       {hasPermission === false ? (
         <div className="text-center p-6">
-          <p className="text-red-500 mb-4">Camera permission denied.</p>
-          <button onClick={() => navigate('/')} className="text-white underline">Go Back</button>
+          <p className="text-red-500 mb-4">Доступ к камере запрещен.</p>
+          <button onClick={() => navigate('/')} className="text-white underline">Назад</button>
         </div>
       ) : (
         <>
@@ -71,7 +71,7 @@ export const QrScanner: React.FC = () => {
                 <div className="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 border-neon-blue -mb-1 -ml-1"></div>
                 <div className="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-neon-blue -mb-1 -mr-1"></div>
              </div>
-             <p className="mt-8 text-white font-bold bg-black/50 px-4 py-1 rounded">Point at a MagCode</p>
+             <p className="mt-8 text-white font-bold bg-black/50 px-4 py-1 rounded">Наведите камеру на Mag-код</p>
           </div>
 
           {/* Dev Simulation Button */}
@@ -79,7 +79,7 @@ export const QrScanner: React.FC = () => {
             onClick={handleSimulateScan}
             className="absolute bottom-24 z-20 px-6 py-3 bg-neon-purple text-white font-bold rounded-full shadow-lg active:scale-95 transition-transform"
           >
-            [DEV] Simulate Scan
+            [DEV] Симуляция Скана
           </button>
           
           <button 

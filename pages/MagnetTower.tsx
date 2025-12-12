@@ -264,8 +264,8 @@ export const MagnetTower: React.FC = () => {
       {!started && !gameOver && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
            <div className="bg-black/60 p-6 rounded-xl backdrop-blur-md text-center animate-pulse">
-              <h2 className="text-2xl font-bold text-neon-blue">TAP TO START</h2>
-              <p className="text-sm text-gray-300">Stack blocks perfectly!</p>
+              <h2 className="text-2xl font-bold text-neon-blue">НАЖМИ ЧТОБЫ НАЧАТЬ</h2>
+              <p className="text-sm text-gray-300">Строй башню идеально ровно!</p>
            </div>
         </div>
       )}
@@ -273,22 +273,22 @@ export const MagnetTower: React.FC = () => {
       {gameOver && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
            <div className="bg-mag-panel p-8 rounded-2xl border border-neon-purple text-center max-w-xs w-full">
-              <h2 className="text-3xl font-bold text-white mb-2">GAME OVER</h2>
-              <p className="text-gray-400 mb-4">Score: {score}</p>
-              <p className="text-neon-blue font-bold mb-6">+{Math.floor(score * 10)} MagCoins</p>
+              <h2 className="text-3xl font-bold text-white mb-2">ИГРА ОКОНЧЕНА</h2>
+              <p className="text-gray-400 mb-4">Счет: {score}</p>
+              <p className="text-neon-blue font-bold mb-6">+{Math.floor(score * 10)} MC</p>
               
               <div className="flex flex-col gap-3">
                 <button 
                     onClick={restart}
                     className="w-full py-3 bg-neon-purple text-white font-bold rounded-lg hover:bg-purple-600 transition-colors"
                 >
-                    Try Again
+                    Ещё раз
                 </button>
                 <button 
                     onClick={() => navigate('/')}
                     className="w-full py-3 bg-gray-700 text-white font-bold rounded-lg hover:bg-gray-600 transition-colors"
                 >
-                    Main Menu
+                    Главное меню
                 </button>
               </div>
            </div>

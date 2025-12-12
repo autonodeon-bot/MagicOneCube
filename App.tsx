@@ -28,7 +28,7 @@ const App: React.FC = () => {
     return (
       <div className="w-full h-screen bg-mag-dark flex flex-col items-center justify-center">
         <div className="w-16 h-16 border-4 border-neon-blue border-t-transparent rounded-full animate-spin mb-4"></div>
-        <div className="text-neon-blue font-bold tracking-widest animate-pulse">LOADING WORLD</div>
+        <div className="text-neon-blue font-bold tracking-widest animate-pulse">ЗАГРУЗКА МИРА</div>
       </div>
     );
   }

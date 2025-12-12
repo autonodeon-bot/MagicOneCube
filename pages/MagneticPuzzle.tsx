@@ -147,7 +147,7 @@ export const MagneticPuzzle: React.FC = () => {
       const target = currentTargetRef.current; // Relative to 0,0,0
 
       if (placed.length !== target.length) {
-          alert("Incorrect number of blocks!");
+          alert("Неверное количество блоков!");
           return;
       }
 
@@ -183,7 +183,7 @@ export const MagneticPuzzle: React.FC = () => {
               placedBlocksRef.current = [];
           }, 1500);
       } else {
-          alert("Shape doesn't match! Try to align it like the ghost.");
+          alert("Фигура не совпадает! Попробуй собрать как на образце.");
       }
   };
 
@@ -192,22 +192,22 @@ export const MagneticPuzzle: React.FC = () => {
        <div ref={mountRef} className="w-full h-full bg-mag-dark" />
        
        <div className="absolute top-4 w-full text-center pointer-events-none">
-           <h2 className="text-xl font-bold text-white">LEVEL {level}</h2>
-           <p className="text-xs text-gray-400">Replicate the rotating shape on the right grid</p>
+           <h2 className="text-xl font-bold text-white">УРОВЕНЬ {level}</h2>
+           <p className="text-xs text-gray-400">Повтори вращающуюся фигуру справа</p>
        </div>
 
        {completed && (
            <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur pointer-events-none">
-               <h1 className="text-4xl font-black text-green-400 animate-bounce">MATCHED!</h1>
+               <h1 className="text-4xl font-black text-green-400 animate-bounce">СОВПАЛО!</h1>
            </div>
        )}
 
        <div className="absolute bottom-10 w-full flex justify-center gap-4">
            <button onClick={() => { placedBlocksRef.current.forEach(b => sceneRef.current?.remove(b)); placedBlocksRef.current = []; }} className="px-6 py-2 bg-red-900/80 text-white rounded font-bold border border-red-500">
-               CLEAR
+               СБРОС
            </button>
            <button onClick={checkSolution} className="px-6 py-2 bg-neon-blue text-black rounded font-bold hover:scale-105 transition-transform">
-               CHECK MAGNETISM
+               ПРОВЕРИТЬ
            </button>
        </div>
 

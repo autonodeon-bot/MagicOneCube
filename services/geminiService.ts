@@ -15,30 +15,30 @@ try {
 }
 
 export const generateDailyFact = async (): Promise<string> => {
-    if (!ai) return "Magnets are fascinating! (AI Unavailable)";
+    if (!ai) return "Магниты удивительны! (AI недоступен)";
 
     try {
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
-            contents: "Generate a short, fun, one-sentence fact about magnets or physics for a game loading screen.",
+            contents: "Generate a short, fun, one-sentence fact about magnets or physics in Russian language for a game loading screen.",
         });
-        return response.text || "Magnetic fields are invisible forces.";
+        return response.text || "Магнитные поля невидимы, но сильны.";
     } catch (error) {
         console.error("Gemini Error:", error);
-        return "Magnetism binds the universe together.";
+        return "Магнетизм связывает вселенную воедино.";
     }
 };
 
 export const generateQuestDescription = async (theme: string): Promise<string> => {
-    if (!ai) return `A special quest involving ${theme}.`;
+    if (!ai) return `Специальный квест на тему: ${theme}.`;
 
     try {
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
-            contents: `Create a mysterious and exciting 2-sentence description for a daily quest in a game about magnetic cubes. Theme: ${theme}`,
+            contents: `Create a mysterious and exciting 2-sentence description for a daily quest in a game about magnetic cubes in Russian language. Theme: ${theme}`,
         });
-        return response.text || "Explore the magnetic realms and find the hidden core.";
+        return response.text || "Исследуйте магнитные поля и найдите скрытое ядро.";
     } catch (error) {
-        return "A mysterious magnetic anomaly has appeared.";
+        return "Обнаружена таинственная магнитная аномалия.";
     }
 };

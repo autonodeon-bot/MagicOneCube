@@ -9,10 +9,14 @@ export enum GameType {
 export enum UpgradeType {
   MAGNET_STRENGTH = 'MAGNET_STRENGTH',
   SCORE_MULTIPLIER = 'SCORE_MULTIPLIER',
-  AUTO_CLICKER = 'AUTO_CLICKER',
-  TIME_SLOW = 'TIME_SLOW',
-  EXTRA_LIFE = 'EXTRA_LIFE',
-  SKIN_PACK = 'SKIN_PACK'
+  SAFETY_NET = 'SAFETY_NET',        // New: Saves you once
+  TIME_DILATION = 'TIME_DILATION',  // New: Slower blocks
+  GOLDEN_TOUCH = 'GOLDEN_TOUCH',    // New: Spawn rare blocks
+  COMBO_MASTER = 'COMBO_MASTER',    // New: Better combo scores
+  PASSIVE_INCOME = 'PASSIVE_INCOME',// New: Idle earnings
+  PULSE_TECH = 'PULSE_TECH',        // New: Better controls
+  SKIN_CIRCUIT = 'SKIN_CIRCUIT',    // Cosmetic
+  SKIN_GLASS = 'SKIN_GLASS'         // Cosmetic
 }
 
 export interface Upgrade {
@@ -33,6 +37,7 @@ export interface UserProfile {
   isAdmin: boolean;
   inventory: string[]; // Owned skins/items
   highScores: Record<string, number>;
+  lastLogin?: number; // For passive income
 }
 
 export interface GameState {

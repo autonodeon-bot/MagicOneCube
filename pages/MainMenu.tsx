@@ -13,6 +13,8 @@ export const MainMenu: React.FC = () => {
       case 'game3': return '/game/puzzle';
       case 'game4': return '/game/avalanche';
       case 'game5': return '/game/labyrinth';
+      case 'game6': return '/game/magtris';
+      case 'game7': return '/game/surfer';
       default: return '/';
     }
   };

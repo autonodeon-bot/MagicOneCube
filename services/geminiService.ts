@@ -1,27 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the API key safely. 
-// In a browser environment via esm.sh, 'process' is undefined. 
-// We must handle this to prevent the app from crashing before render.
-const getApiKey = () => {
-  try {
-    // Check if process exists before accessing it
-    if (typeof process !== 'undefined' && process.env) {
-      return process.env.API_KEY;
-    }
-  } catch (e) {
-    // Ignore error
-  }
-  return '';
-};
-
-const apiKey = getApiKey();
-// Only initialize if key exists, otherwise let the functions handle the missing AI state
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateDailyFact = async (): Promise<string> => {
-    if (!ai) return "Магнитные поля невидимы, но сильны. (AI Offline)";
-
     try {
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
@@ -35,8 +16,6 @@ export const generateDailyFact = async (): Promise<string> => {
 };
 
 export const generateQuestDescription = async (theme: string): Promise<string> => {
-    if (!ai) return `Исследуйте магнитные поля и найдите скрытое ядро. (AI Offline - Theme: ${theme})`;
-
     try {
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',

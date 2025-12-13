@@ -14,6 +14,8 @@ import { CubeMerge } from './pages/CubeMerge';
 import { MagneticPuzzle } from './pages/MagneticPuzzle';
 import { Avalanche } from './pages/Avalanche';
 import { Labyrinth } from './pages/Labyrinth';
+import { MagTris } from './pages/MagTris';
+import { CubeSurfer } from './pages/CubeSurfer';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -50,6 +52,8 @@ const App: React.FC = () => {
             <Route path="/game/puzzle" element={<MagneticPuzzle />} />
             <Route path="/game/avalanche" element={<Avalanche />} />
             <Route path="/game/labyrinth" element={<Labyrinth />} />
+            <Route path="/game/magtris" element={<MagTris />} />
+            <Route path="/game/surfer" element={<CubeSurfer />} />
             
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

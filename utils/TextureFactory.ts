@@ -81,42 +81,110 @@ export const TextureFactory = {
 
     return new THREE.CanvasTexture(canvas);
   },
+
+  createMagmaTexture: (): THREE.CanvasTexture => {
+    const size = 256;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d')!;
+    
+    // Base
+    ctx.fillStyle = '#330000';
+    ctx.fillRect(0,0,size,size);
+    
+    // Noise
+    for(let i=0; i<500; i++) {
+        const x = Math.random() * size;
+        const y = Math.random() * size;
+        const r = Math.random() * 20 + 5;
+        const grad = ctx.createRadialGradient(x,y,0,x,y,r);
+        grad.addColorStop(0, '#ffaa00');
+        grad.addColorStop(0.5, '#ff4400');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.globalAlpha = 0.6;
+        ctx.beginPath();
+        ctx.arc(x,y,r,0,Math.PI*2);
+        ctx.fill();
+    }
+    
+    // Cracks
+    ctx.strokeStyle = '#110000';
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = 0.8;
+    for(let i=0; i<10; i++) {
+        ctx.beginPath();
+        ctx.moveTo(Math.random()*size, Math.random()*size);
+        for(let j=0; j<5; j++) ctx.lineTo(Math.random()*size, Math.random()*size);
+        ctx.stroke();
+    }
+    
+    return new THREE.CanvasTexture(canvas);
+  },
+
+  createHoloTexture: (color: string): THREE.CanvasTexture => {
+    const size = 256;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d')!;
+    
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0,0,size,size);
+    
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    
+    // Scanlines
+    for(let y=0; y<size; y+=4) {
+        ctx.globalAlpha = Math.random() * 0.5 + 0.2;
+        ctx.beginPath();
+        ctx.moveTo(0,y);
+        ctx.lineTo(size,y);
+        ctx.stroke();
+    }
+    
+    // Glitch box
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.3;
+    ctx.fillRect(Math.random()*size, Math.random()*size, 50, 10);
+    
+    return new THREE.CanvasTexture(canvas);
+  },
   
   // Creates a shiny metallic material setup
-  getMaterial: (type: 'BASIC' | 'CIRCUIT' | 'GLASS', color: number): THREE.Material => {
+  getMaterial: (type: 'BASIC' | 'CIRCUIT' | 'GLASS' | 'MAGMA' | 'HOLO', color: number): THREE.Material => {
      const colorStr = '#' + new THREE.Color(color).getHexString();
      
      if (type === 'CIRCUIT') {
          const tex = TextureFactory.createCircuitTexture(colorStr);
          return new THREE.MeshStandardMaterial({
-             map: tex,
-             color: color,
-             roughness: 0.2,
-             metalness: 0.8,
-             emissive: color,
-             emissiveIntensity: 0.4
+             map: tex, color: color, roughness: 0.2, metalness: 0.8, emissive: color, emissiveIntensity: 0.4
          });
      }
-     
      if (type === 'GLASS') {
          return new THREE.MeshPhysicalMaterial({
-             color: color,
-             metalness: 0.1,
-             roughness: 0.05,
-             transmission: 0.9, // Add transparency
-             thickness: 1.0,
-             emissive: color,
-             emissiveIntensity: 0.2
+             color: color, metalness: 0.1, roughness: 0.05, transmission: 0.9, thickness: 1.0, emissive: color, emissiveIntensity: 0.2
+         });
+     }
+     if (type === 'MAGMA') {
+         const tex = TextureFactory.createMagmaTexture();
+         return new THREE.MeshStandardMaterial({
+             map: tex, color: 0xffffff, emissive: 0xff4400, emissiveIntensity: 0.8, roughness: 0.9
+         });
+     }
+     if (type === 'HOLO') {
+         const tex = TextureFactory.createHoloTexture(colorStr);
+         return new THREE.MeshBasicMaterial({
+             map: tex, color: color, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending
          });
      }
      
      // Default improved basic
      const tex = TextureFactory.createGridTexture(colorStr);
      return new THREE.MeshStandardMaterial({
-         map: tex,
-         color: color,
-         roughness: 0.4,
-         metalness: 0.6
+         map: tex, color: color, roughness: 0.4, metalness: 0.6
      });
   }
 };

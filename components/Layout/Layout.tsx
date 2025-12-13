@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGame } from '../../store/GameContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -42,6 +42,9 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       <main className="w-full h-full relative z-10">
         {children}
       </main>
+      
+      {/* MAG-BOT COMPANION */}
+      <MagBot />
 
       {/* Bottom Navigation - Sticky */}
       {!isGameScreen && (
@@ -53,6 +56,36 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       )}
     </div>
   );
+};
+
+const MagBot: React.FC = () => {
+    const [pos, setPos] = useState({x: 80, y: 80});
+    
+    useEffect(() => {
+        const interval = setInterval(() => {
+            // Random float movement
+            setPos(p => ({
+                x: Math.max(10, Math.min(90, p.x + (Math.random() - 0.5) * 5)),
+                y: Math.max(10, Math.min(90, p.y + (Math.random() - 0.5) * 5))
+            }));
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div 
+            className="absolute pointer-events-none z-40 transition-all duration-1000 ease-in-out"
+            style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+        >
+            <div className="relative animate-bounce">
+                <div className="w-8 h-8 bg-white rounded-full shadow-[0_0_15px_rgba(0,255,255,0.8)] border-2 border-neon-blue flex items-center justify-center">
+                    <div className="w-4 h-1 bg-black rounded-full animate-pulse"></div>
+                </div>
+                <div className="absolute -top-3 -left-2 w-3 h-3 border-l-2 border-t-2 border-white rounded-tl-lg"></div>
+                <div className="absolute -top-3 -right-2 w-3 h-3 border-r-2 border-t-2 border-white rounded-tr-lg"></div>
+            </div>
+        </div>
+    );
 };
 
 const NavBtn: React.FC<{ icon: string, label: string, active: boolean, onClick: () => void }> = ({ icon, label, active, onClick }) => (
